@@ -1,25 +1,20 @@
 use std::fs;
 
 fn main() {
-    let contents = fs::read_to_string("input")
-        .expect("Something went wrong reading the file");
+    let contents = fs::read_to_string("input").unwrap();
     let mut lines = contents.split_whitespace();
-    let mut prelast = u16::from_str_radix(lines.next().unwrap(), 10).unwrap();
-    let mut last = u16::from_str_radix(lines.next().unwrap(), 10).unwrap();
+    let mut prelast = lines.next().unwrap().parse::<u16>().unwrap();
+    let mut last = lines.next().unwrap().parse::<u16>().unwrap();
     let mut last_sum = u16::MAX;
-    let mut count = u16::MIN;
-    loop {
-        let cur = lines.next();
-        if cur == None {
-            break;
-        };
-        let num = u16::from_str_radix(cur.unwrap(), 10).unwrap();
+    let mut sum = u16::MIN;
+    for cur in lines {
+        let num = cur.parse::<u16>().unwrap();
         if num + last + prelast > last_sum {
-            count += 1;
+            sum += 1;
         }
         last_sum = num + last + prelast;
         prelast = last;
         last = num;
     }
-    println!("{}", count);
+    println!("task 2: {}", sum);
 }
