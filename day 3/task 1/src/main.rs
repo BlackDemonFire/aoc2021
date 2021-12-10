@@ -1,18 +1,14 @@
 use std::fs;
 
 fn main() {
-    let contents = fs::read_to_string("input").expect("Something went wrong reading the file");
-    let mut lines = contents.split_whitespace();
+    let contents = fs::read_to_string("input").unwrap();
+    let lines = contents.split_whitespace();
     let mut ones = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let mut zeroes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let mut gamma = String::with_capacity(12);
     let mut epsilon = String::with_capacity(12);
-    loop {
-        let cur = lines.next();
-        if cur == None {
-            break;
-        };
-        let chars = cur.unwrap().chars();
+    for cur in lines {
+        let chars = cur.chars();
         let mut i = 0;
         for c in chars {
             match c {
@@ -23,7 +19,7 @@ fn main() {
             i += 1;
         }
     }
-    let r = std::ops::Range { start: 0, end: 12 };
+    let r = 0..12;
     for i in r {
         if ones[i] >= zeroes[i] {
             gamma += "1";
